@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/navbar"
+import Navbar from "./components/navbar";
 
-const font = localFont({
-  src: "../public/fonts/CalSans-Regular.woff2"
+const inter = Inter({
+  subsets: ["latin"]
 });
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children } : Readonly<{ children : React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${font.className} antialiased bg-background`}>
+      <body className={`${inter.className} antialiased bg-background`}>
         <Navbar />
         {children}
       </body>
