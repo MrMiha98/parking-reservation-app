@@ -119,6 +119,20 @@
   --color-hovercolor: #f5f5f5;
   --color-darkmode-hovercolor: #242424;
   --color-darkmode-background: #171717;
+
+  --color-slider-opacity: linear-gradient(to right, white 0%, transparent 100%);
+
+  --animate-loop-scroll: loop-scroll 50s linear infinite;
+
+  @keyframes loop-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-100%);
+    }
+  }
 }
 
 @layer base {
