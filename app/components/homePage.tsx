@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { BadgeCheck } from "lucide-react";
 
-export default function Hero() {
+export default function HomePage() {
   return (
     <main className="w-full max-w-3xl mx-auto flex-grow p-4 sm:p-6">
       <div className="w-full flex flex-col md:flex-row justify-between">
