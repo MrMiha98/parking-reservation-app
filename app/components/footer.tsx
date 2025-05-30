@@ -1,5 +1,22 @@
+import Link from "next/link"
+import { SquareArrowOutUpRight, ScreenShare } from "lucide-react"
+
 export default function Footer() {
   return (
-    <footer>this is the footer</footer>
+    <footer className="w-full py-10">
+      <div className="mx-auto px-4 sm:px-6 max-w-3xl flex justify-between">
+        <Link href="https://github.com/MrMiha98/parking-reservation-app" className="flex flex-row items-center gap-x-2 cursor-pointer">
+          <p className="font-normal text-sm text-primary underline underline-offset-4">Source on GitHub</p>
+          <SquareArrowOutUpRight color="#020817" size="16"/>
+        </Link>
+        <div className="flex flex-row items-center gap-x-2 cursor-pointer">
+          <p className="font-normal text-sm text-primary">Website hosted by:</p>
+          <Link href="https://vercel.com" className="flex flex-row items-center gap-x-2">
+            <p className="font-normal text-sm text-primary flex flex-row items-center gap-x-2 hover:underline underline-offset-4">Vercel™</p>
+            <ScreenShare color="#020817" size="16"/>
+          </Link>
+        </div>
+      </div>
+    </footer>
   )
 }
