@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
   return (
-    <div className="h-16 w-full border-b border-border">
-      <div className="h-16 max-w-3xl mx-auto flex items-center justify-between">
+    <nav className="h-16 w-full border-b border-border">
+      <div className="h-16 max-w-3xl mx-auto flex items-center justify-between px-4 sm:px-6">
         <div className="h-16 flex items-center gap-4">
           <Link href="/">
             <Image src="/media/parking-area.png" alt="App Logo" width={32} height={32} className="transition-all ease-in duration-150 hover:scale-105" />
@@ -17,6 +17,6 @@ export default function Navbar() {
           <Button className="h-10 rounded-sm cursor-pointer">Sign In</Button>
         </Link>
       </div>
-    </div>
+    </nav>
   )
 }
