@@ -18,7 +18,7 @@ export default function Dashboard() {
    if (!session) return null;
 
   return (
-    <div className="flex-grow show">
+    <div className="flex-grow">
       <h1>Welcome to the Dashboard Page</h1>
     </div>
   )

@@ -114,11 +114,11 @@
   --color-border: #E2E8F0;
   --color-darkmode-border: #373737;
   --color-background: #ffffff;
+  --color-darkmode-background: #171717;
   --color-primary: #020817;
   --color-darkmode-primary: #ababab;
   --color-hovercolor: #f5f5f5;
   --color-darkmode-hovercolor: #242424;
-  --color-darkmode-background: #171717;
 
   --color-slider-opacity: linear-gradient(to right, white 0%, transparent 100%);
 
