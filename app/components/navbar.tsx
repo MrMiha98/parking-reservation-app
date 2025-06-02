@@ -29,6 +29,8 @@ export default function Navbar() {
                 <Image src={session.user?.image || "/media/default-user-image.png"} width={40} height={40} alt="User Profile Picture" className="rounded-full cursor-pointer"/>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="border-border dark:border-darkmode-border mr-12">
+              <DropdownMenuLabel className="text-black dark:text-white">{session.user?.name}</DropdownMenuLabel>
+              <DropdownMenuSeparator/>
                 <DropdownMenuItem onClick={() => signOut({callbackUrl: "/"})} className="cursor-pointer text-primary dark:text-[#d2d2d2] hover:!bg-red-100 hover:!text-red-500 dark:hover:!bg-red-500 dark:hover:!text-white">Sign Out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
