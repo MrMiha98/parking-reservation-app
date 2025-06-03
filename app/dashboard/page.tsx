@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import ParkingGrid from "../components/ParkingGrid";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
@@ -11,6 +12,7 @@ export default async function Dashboard() {
 
   return (
     <main className="show flex-grow flex flex-col">
+      <ParkingGrid/>
     </main>
   )
 }

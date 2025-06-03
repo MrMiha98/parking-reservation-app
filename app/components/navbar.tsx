@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import DarkmodeToggle from "./darkmodeToggle"
+import DarkmodeToggle from "./DarkModeToggle";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
 
