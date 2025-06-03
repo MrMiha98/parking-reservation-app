@@ -1,6 +1,6 @@
 "use client"
 
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -18,8 +18,7 @@ export default function Dashboard() {
    if (!session) return null;
 
   return (
-    <div className="flex-grow">
-      <h1>Welcome to the Dashboard Page</h1>
-    </div>
+    <main className="show flex-grow flex flex-col">
+    </main>
   )
 }
