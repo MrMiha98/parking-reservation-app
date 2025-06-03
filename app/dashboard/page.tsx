@@ -11,7 +11,7 @@ export default async function Dashboard() {
   }
 
   return (
-    <main className="show flex-grow flex flex-col">
+    <main className="w-full flex-grow flex flex-col">
       <ParkingGrid/>
     </main>
   )
