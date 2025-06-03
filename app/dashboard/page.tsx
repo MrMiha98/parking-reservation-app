@@ -1,21 +1,13 @@
-"use client"
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions);
 
-export default function Dashboard() {
-  const { data: session, status } = useSession(); // destructure the session object and create session and status constants
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/");
-    }
-  }, [status, router]);
-
-   if (!session) return null;
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <main className="show flex-grow flex flex-col">
