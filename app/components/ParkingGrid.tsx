@@ -1,128 +1,55 @@
+const parkingRows = [
+  {
+    rowId: 1,
+    startCol: 1,
+    spots: [
+      { id: 1, owner: "Alice" },
+      { id: 2, owner: "Bob" },
+      { id: 3, owner: "Charlie" },
+      { id: 4, owner: "Dana" },
+    ],
+  },
+  {
+    rowId: 2,
+    startCol: 2,
+    spots: [
+      { id: 5, owner: "Eve" },
+      { id: 6, owner: "Frank" },
+      { id: 7, owner: "Grace" },
+    ],
+  },
+];
+
 export default function ParkingGrid() {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col">
+
+      {/* Top Parking Spot Layout */}
       <div className="w-full flex flex-col p-10">
         <h1 className="font-semibold text-black text-3xl dark:text-white">Reserve Your Parking Spot Now</h1>
-        <h3 className="mt-6 dark:text-darkmode-primary">1st Floor</h3>
-        <div className="w-fit grid grid-rows-2 grid-cols-4 justify-items-end gap-y-8 border border-border mt-2">
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden ">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-l-2 border-border overflow-hidden col-start-2">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
+        <h3 className="mt-6 text-[#323232] dark:text-[#d2d2d2]">1st Floor</h3>
+        <div className="flex flex-col gap-y-6">
+          {parkingRows.map((row) => (
+            <div key={row.rowId} className="w-fit grid grid-cols-4 gap-2" style={{gridColumnStart: row.startCol}}>
+              {/* Render empty cells for offset */}
+              {Array.from({ length: row.startCol - 1 }).map((_, i) => (
+                <div key={`empty-${i}`}/>
+              ))}
+
+              {/* Render parking spots */}
+              {row.spots.map((spot) => (
+                <div key={spot.id} className="relative h-28 w-20 bg-green-300 border border-gray-700 flex items-center justify-center">
+                  <p className="absolute text-yellow-500 font-bold">{spot.id}</p>
+                  <p className="absolute bottom-0 text-sm">{spot.owner}</p>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="w-full flex flex-col px-10 pb-10 mt-4">
-        <h3 className="dark:text-darkmode-primary">2nd Floor</h3>
-        <div className="w-fit grid grid-rows-2 grid-cols-8 justify-items-start gap-y-8 border border-border mt-2">
-          <div className="h-28 w-20 relative border-r-2 border-l-2 border-border overflow-hidden col-start-2">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}} ></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-r-2 border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-          <div className="h-28 w-20 relative border-border overflow-hidden">
-            <p className="absolute inset-0 flex justify-center items-center font-bold text-yellow-500">10</p>
-            <p className="w-full absolute bottom-1 flex justify-center items-center font-semibold text-primary text-sm">john doe</p>
-            <span className="absolute top-0 right-0" style={{ width: 0, height: 0, borderBottom: "20px solid transparent", borderRight: "20px solid red"}}></span>
-          </div>
-        </div>
-      </div>
+      {/* Bottom Parking Spot layout */}
+
     </div>
   )
 }
