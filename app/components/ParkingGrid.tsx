@@ -14,6 +14,10 @@ const format = (date: Date): string => date.toISOString().split('T')[0];
 const formattedToday = format(today);
 const formattedTomorrow = format(tomorrow);
 
+const t = new Date();
+const nextWeekDate = new Date();
+nextWeekDate.setDate(t.getDate() + 7);
+
 type ParkingAvailability = {
   spot_id: number;
   date: string;
@@ -38,10 +42,10 @@ export default function ParkingGrid() {
     fetchData();
   }, []);
 
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [selectedDates, setSelectedDates] = useState<Date[] | undefined>([]);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const userId = 12;
+  const userId = 1;
 
   const allSpots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   const ownerNames = ["Bella C.", "Liam T.", "Emma R.", "Noah J.", "Olivia M.", "Mason K.", "Ava L.", "Ethan W.", "Sophia G.", "Lucas B.", "Isabella S.", "Logan D.", "Mia F.", "James H.", "Charlotte N.", "Benjamin A.", "Amelia P.", "Elijah V.", "Harper Z.", "Alexander Q."];
@@ -53,9 +57,9 @@ export default function ParkingGrid() {
         <h3 className="text-[#323232] dark:text-darkmode-primary">1st floor</h3>
         {userId < 8 ? (<Button variant="ghost" className="border border-border cursor-pointer" onClick={() => setShowCalendar(prev => !prev)}>Reserve your spot now</Button>) : null}
         {showCalendar && userId < 8 && (
-          <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 shadow-md">
-            <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md border-none"/>
-            <Button className="mt-4 h-10 w-[90%]">Reserve</Button>
+          <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 shadow-md z-10">
+            <Calendar mode="multiple" selected={selectedDates} onSelect={(dates) => setSelectedDates(dates)} fromDate={today} toDate={nextWeekDate} className="bg-white rounded-md border-none"/>
+            <Button className="mt-4 h-10 w-[90%] cursor-pointer">Reserve</Button>
           </div>
         )}
       </div>
@@ -74,13 +78,13 @@ export default function ParkingGrid() {
           )
         })}
       </div>
-      <div className="w-full flex justify-between items-end pb-1 relative">
+      <div className="w-full flex justify-between items-end pb-1 relative mt-24">
         <h3 className="text-[#323232] dark:text-darkmode-primary">2nd floor</h3>
         {userId > 7 ? (<Button variant="ghost" className="border border-border cursor-pointer" onClick={() => setShowCalendar(prev => !prev)}>Reserve your spot now</Button>) : null}
         {showCalendar && userId > 7 && (
           <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 z-10 shadow-md">
-            <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md border-none"/>
-            <Button className="mt-4 h-10 w-[90%]">Reserve</Button>
+            <Calendar mode="multiple" selected={selectedDates} onSelect={(dates) => setSelectedDates(dates)} fromDate={today} toDate={nextWeekDate} className="bg-white rounded-md border-none"/>
+            <Button className="mt-4 h-10 w-[90%] cursor-pointer">Reserve</Button>
           </div>
         )}
       </div>
