@@ -1,8 +1,8 @@
 "use client";
 
-
 import { supabase } from "@/lib/supabaseClient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { PostgrestError } from '@supabase/supabase-js';
 
 const today = new Date();
 const tomorrow = new Date();
@@ -11,15 +11,31 @@ const format = (date: Date): string => date.toISOString().split('T')[0];
 const formattedToday = format(today);
 const formattedTomorrow = format(tomorrow);
 
-export default async function ParkingGrid() {
-  const [hoveredSpot, setHoveredSpot] = useState<number | null>(null);
+type ParkingAvailability = {
+  spot_id: number;
+  date: string;
+};
+
+export default function ParkingGrid() {
+  const [data, setData] = useState<ParkingAvailability[]>([]);
+  const [error, setError] = useState<PostgrestError | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data, error } = await supabase.from("parking_availability").select("spot_id, date");
+
+      if (error) {
+        console.error(error);
+        setError(error);
+      } else {
+        setData(data);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const userId = 10;
-
-  const { data, error } = await supabase.from("parking_availability").select("spot_id, date");
-
-  if (error) {
-    console.error(error);
-  }
 
   const allSpots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   const ownerNames = ["Bella C.", "Liam T.", "Emma R.", "Noah J.", "Olivia M.", "Mason K.", "Ava L.", "Ethan W.", "Sophia G.", "Lucas B.", "Isabella S.", "Logan D.", "Mia F.", "James H.", "Charlotte N.", "Benjamin A.", "Amelia P.", "Elijah V.", "Harper Z.", "Alexander Q."];
@@ -35,14 +51,11 @@ export default async function ParkingGrid() {
           const availableTommorow = data?.find(el => el.spot_id == spot && el.date == formattedTomorrow);
 
           return (
-            <>
-              <div key={spot} className={`${userId == spot ? availableToday ? "bg-green-600" : "bg-red-600" : availableToday ? "bg-green-400" : "bg-red-400"} h-28 w-20 relative flex justify-center items-center ${spot == 5 ? "col-start-2" : ""} cursor-pointer`}>
-                <h1 className="text-2xl font-bold text-gray-100">{spot}</h1>
-                <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == userId ? "text-white" : "text-primary"}`}>{availableToday ? "" : ownerNames[spot - 1]}</p>
-                <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${userId == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
-              </div>
-
-            </>
+            <div key={spot} className={`${userId == spot ? availableToday ? "bg-green-600" : "bg-red-600" : availableToday ? "bg-green-400" : "bg-red-400"} h-28 w-20 relative flex justify-center items-center ${spot == 5 ? "col-start-2" : ""} cursor-pointer`}>
+              <h1 className="text-2xl font-bold text-gray-100">{spot}</h1>
+              <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == userId ? "text-white" : "text-primary"}`}>{availableToday ? "" : ownerNames[spot - 1]}</p>
+              <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${userId == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
+            </div>
           )
         })}
       </div>
