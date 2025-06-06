@@ -18,6 +18,13 @@ const t = new Date();
 const nextWeekDate = new Date();
 nextWeekDate.setDate(t.getDate() + 7);
 
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 type ParkingAvailability = {
   spot_id: number;
   date: string;
@@ -36,16 +43,46 @@ export default function ParkingGrid() {
         setError(error);
       } else {
         setData(data);
+
+        const userDates = data
+          .filter((el) => el.spot_id === userId)
+          .map((el) => new Date(el.date));
+
+        setReservedDates(userDates);
       }
     }
 
     fetchData();
   }, []);
 
+  const handleReserve = async () => {
+    if (!selectedDates || selectedDates.length === 0) {
+      alert("Please select at least one date.");
+      return;
+    }
+
+    const rowsToInsert = selectedDates.map(date => ({
+      spot_id: userId,
+      date: formatDate(date),
+    }));
+
+    const { error } = await supabase.from("parking_availability").insert(rowsToInsert);
+
+    if (error) {
+      console.error("Error inserting reservations:", error);
+      alert("An error occurred while saving your reservation.");
+    } else {
+      alert("Your reservation was successful!");
+      setSelectedDates([]);
+      setShowCalendar(false);
+    }
+  };
+
   const [selectedDates, setSelectedDates] = useState<Date[] | undefined>([]);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [reservedDates, setReservedDates] = useState<Date[]>([]);
 
-  const userId = 1;
+  const userId = 10;
 
   const allSpots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   const ownerNames = ["Bella C.", "Liam T.", "Emma R.", "Noah J.", "Olivia M.", "Mason K.", "Ava L.", "Ethan W.", "Sophia G.", "Lucas B.", "Isabella S.", "Logan D.", "Mia F.", "James H.", "Charlotte N.", "Benjamin A.", "Amelia P.", "Elijah V.", "Harper Z.", "Alexander Q."];
@@ -58,8 +95,8 @@ export default function ParkingGrid() {
         {userId < 8 ? (<Button variant="ghost" className="border border-border cursor-pointer" onClick={() => setShowCalendar(prev => !prev)}>Reserve your spot now</Button>) : null}
         {showCalendar && userId < 8 && (
           <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 shadow-md z-10">
-            <Calendar mode="multiple" selected={selectedDates} onSelect={(dates) => setSelectedDates(dates)} fromDate={today} toDate={nextWeekDate} className="bg-white rounded-md border-none"/>
-            <Button className="mt-4 h-10 w-[90%] cursor-pointer">Reserve</Button>
+            <Calendar mode="multiple" selected={selectedDates} onSelect={(dates) => setSelectedDates(dates)} fromDate={today} toDate={nextWeekDate} modifiers={{ reserved: reservedDates }} modifiersClassNames={{ reserved: "bg-green-400 text-white" }} className="bg-white rounded-md border-none"/>
+            <Button className="mt-4 h-10 w-[90%] cursor-pointer" onClick={handleReserve}>Reserve</Button>
           </div>
         )}
       </div>
@@ -83,8 +120,8 @@ export default function ParkingGrid() {
         {userId > 7 ? (<Button variant="ghost" className="border border-border cursor-pointer" onClick={() => setShowCalendar(prev => !prev)}>Reserve your spot now</Button>) : null}
         {showCalendar && userId > 7 && (
           <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 z-10 shadow-md">
-            <Calendar mode="multiple" selected={selectedDates} onSelect={(dates) => setSelectedDates(dates)} fromDate={today} toDate={nextWeekDate} className="bg-white rounded-md border-none"/>
-            <Button className="mt-4 h-10 w-[90%] cursor-pointer">Reserve</Button>
+            <Calendar mode="multiple" selected={selectedDates} onSelect={(dates) => setSelectedDates(dates)} fromDate={today} toDate={nextWeekDate} modifiers={{ reserved: reservedDates }} modifiersClassNames={{ reserved: "bg-green-400 text-white" }} className="bg-white rounded-md border-none"/>
+            <Button className="mt-4 h-10 w-[90%] cursor-pointer" onClick={handleReserve}>Reserve</Button>
           </div>
         )}
       </div>
