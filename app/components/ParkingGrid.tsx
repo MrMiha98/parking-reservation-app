@@ -84,9 +84,11 @@ export default function ParkingGrid({ user_role }: { user_role: string }) {
       } else {
         setData(data);
 
+        const userSpotId = parseInt(user_role);
+
         const userDates = data
-        .filter((el) => el.spot_id === user_role)
-        .map((el) => new Date(el.date));
+          .filter((el) => el.spot_id === userSpotId)
+          .map((el) => new Date(el.date));
 
         setReservedDates(userDates);
       }
