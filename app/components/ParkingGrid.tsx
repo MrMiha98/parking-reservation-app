@@ -39,7 +39,7 @@ type Reservation = {
   user_name: string;
 };
 
-export default function ParkingGrid({ user_role }: { user_role: number }) {
+export default function ParkingGrid({ user_role }: { user_role: string }) {
   const [user, setUser] = useState<any>(null);
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -286,7 +286,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
       <h1 className="font-bold text-3xl text-black dark:text-white mb-12">Reserve Your Parking Spot Now</h1>
       <div className="w-full flex justify-between items-end pb-1 relative">
         <h3 className="text-[#323232] dark:text-darkmode-primary">1st floor</h3>
-        {user_role < 8 ? (
+        {parseInt(user_role) < 8 ? (
           <div className="flex flex-row gap-x-1">
             <Button className="border border-border cursor-pointer"
               variant="ghost"
@@ -300,7 +300,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
                 setShowCalendar(prev => !prev);
                 setIsUnreserveMode(false)
               }}>Free up your spot</Button>
-            {showCalendar && user_role < 8 && (
+            {showCalendar && parseInt(user_role) < 8 && (
               isUnreserveMode ? (
                 <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 shadow-md z-10">
                   <Calendar className="bg-white rounded-md border-none"
@@ -359,7 +359,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
           const availableTommorow = data?.find(el => el.spot_id == spot && el.date == formattedTomorrow);
 
           // Spot class
-          const spotClass = user_role == spot
+          const spotClass = parseInt(user_role) == spot
             ? availableToday ? "bg-green-600" : "bg-red-600"
             : availableToday ? "bg-green-400" : "bg-red-400";
 
@@ -369,15 +369,15 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
                 <div className="h-8 w-8 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
               </div>
             ) : (
-              <div className={`${user_role == spot ? availableToday ? "bg-green-600" : "bg-red-600" : availableToday ? "bg-green-400" : "bg-red-400"} h-28 w-20 relative flex justify-center items-center ${spot == 5 ? "col-start-2" : ""} cursor-pointer ${isLoading ? "animate-pulse bg-gray-200" : spotClass}`}
+              <div className={`${parseInt(user_role) == spot ? availableToday ? "bg-green-600" : "bg-red-600" : availableToday ? "bg-green-400" : "bg-red-400"} h-28 w-20 relative flex justify-center items-center ${spot == 5 ? "col-start-2" : ""} cursor-pointer ${isLoading ? "animate-pulse bg-gray-200" : spotClass}`}
                 key={spot}
                 onClick={() => {
-                  if (!isLoading && user_role > 20) {
+                  if (!isLoading && user_role === "none") {
                     handleSpotClick(spot);
                   };
                 }}>
                 <h1 className="text-2xl font-bold text-gray-100">{spot}</h1>
-                <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == user_role ? "text-white" : "text-primary"}`}>
+                <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == parseInt(user_role) ? "text-white" : "text-primary"}`}>
                     {(() => {
                       const spotReservation = reservations.find(r => r.spot_id === spot);
                       if (spotReservation) {
@@ -387,7 +387,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
                       }
                     })()}
                 </p>
-                <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${user_role == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
+                <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${parseInt(user_role) == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
               </div>
             )
 
@@ -395,7 +395,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
       </div>
       <div className="w-full flex justify-between items-end pb-1 relative mt-24">
         <h3 className="text-[#323232] dark:text-darkmode-primary">2nd floor</h3>
-        {user_role > 7 && user_role < 21 ? (
+        {parseInt(user_role) > 7 && parseInt(user_role) < 21 ? (
           <div className="flex flex-row gap-x-1">
             <Button className="border border-border cursor-pointer"
               variant="ghost"
@@ -409,7 +409,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
                 setShowCalendar(prev => !prev);
                 setIsUnreserveMode(false)
               }}>Free up your spot</Button>
-            {showCalendar && user_role > 8 && (
+            {showCalendar && parseInt(user_role) > 8 && (
               isUnreserveMode ? (
                 <div className="absolute top-10 right-0 flex flex-col justify-end items-center bg-white border border-border rounded-md pb-4 shadow-md z-10">
                   <Calendar className="bg-white rounded-md border-none"
@@ -468,7 +468,7 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
           const availableTommorow = data?.find(el => el.spot_id == spot && el.date == formattedTomorrow);
 
           // Spot class
-          const spotClass = user_role == spot
+          const spotClass = parseInt(user_role) == spot
             ? availableToday ? "bg-green-600" : "bg-red-600"
             : availableToday ? "bg-green-400" : "bg-red-400";
 
@@ -478,12 +478,12 @@ export default function ParkingGrid({ user_role }: { user_role: number }) {
               <div className="h-8 w-8 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className={`${user_role == spot ? availableToday ? "bg-green-600" : "bg-red-600" : availableToday ? "bg-green-400" : "bg-red-400"} h-28 w-20 relative flex justify-center items-center ${spot == 8 ? "col-start-2" : ""} cursor-pointer ${isLoading ? "animate-pulse bg-gray-200" : spotClass}`}
+            <div className={`${parseInt(user_role) == spot ? availableToday ? "bg-green-600" : "bg-red-600" : availableToday ? "bg-green-400" : "bg-red-400"} h-28 w-20 relative flex justify-center items-center ${spot == 8 ? "col-start-2" : ""} cursor-pointer ${isLoading ? "animate-pulse bg-gray-200" : spotClass}`}
               key={spot}
               onClick={() => handleSpotClick(spot)}>
               <h1 className="text-2xl font-bold text-gray-100">{spot}</h1>
-              <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == user_role ? "text-white" : "text-primary"}`}>{availableToday ? "" : ownerNames[spot - 1]}</p>
-              <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${user_role == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
+              <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == parseInt(user_role) ? "text-white" : "text-primary"}`}>{availableToday ? "" : ownerNames[spot - 1]}</p>
+              <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${parseInt(user_role) == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
             </div>
           )
         })}

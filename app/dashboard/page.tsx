@@ -48,7 +48,7 @@ export default function Dashboard() {
   return (
     <main className="w-full flex-grow flex flex-col">
       {role ? (
-        <ParkingGrid user_role={parseInt(role)}/>
+        <ParkingGrid user_role={role}/>
       ) : (
         <RolePickerModal
           onComplete={() => {
