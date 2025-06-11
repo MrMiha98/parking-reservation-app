@@ -39,7 +39,7 @@ type Reservation = {
   user_name: string;
 };
 
-export default function ParkingGrid() {
+export default function ParkingGrid({ user_role }: { user_role: number }) {
   const [user, setUser] = useState<any>(null);
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -277,8 +277,6 @@ export default function ParkingGrid() {
     // Trigger grid refresh
     setRefreshTrigger(prev => prev + 1);
   };
-
-  const user_role = 21;
 
   const allSpots = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   const ownerNames = ["Bella C.", "Liam T.", "Emma R.", "Noah J.", "Olivia M.", "Mason K.", "Ava L.", "Ethan W.", "Sophia G.", "Lucas B.", "Isabella S.", "Logan D.", "Mia F.", "James H.", "Charlotte N.", "Benjamin A.", "Amelia P.", "Elijah V.", "Harper Z.", "Alexander Q."];

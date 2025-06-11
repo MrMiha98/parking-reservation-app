@@ -32,7 +32,7 @@ export default function Dashboard() {
       } else if (profiles && profiles.length > 0) {
         setRole(profiles[0].role);
       } else {
-        setRole(null);
+        setRole(null); // no role yet
       }
 
       setLoading(false);
@@ -48,10 +48,17 @@ export default function Dashboard() {
   return (
     <main className="w-full flex-grow flex flex-col">
       {role ? (
-        <ParkingGrid />
+        <ParkingGrid user_role={parseInt(role)}/>
       ) : (
-        <RolePickerModal onComplete={() => setRole("just anything to close modal")} />
-      )}
+        <RolePickerModal
+          onComplete={() => {
+            setRole("any-value-to-close-modal");
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }}
+        />
+        )}
     </main>
   );
 }

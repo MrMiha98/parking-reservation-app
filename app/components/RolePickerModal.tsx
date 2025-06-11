@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function RolePickerModal({ onComplete }: { onComplete: () => void }) {
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [takenSpots, setTakenSpots] = useState<number[]>([]);
+  const router = useRouter();
 
   // Get the current user
   const [user, setUser] = useState<any>(null);
@@ -50,6 +52,7 @@ export default function RolePickerModal({ onComplete }: { onComplete: () => void
       alert("Failed to save role: " + error.message);
     } else {
       onComplete();
+      router.push("/dashboard");
     }
 
     setLoading(false);
@@ -66,8 +69,7 @@ export default function RolePickerModal({ onComplete }: { onComplete: () => void
         <select
           className="w-full border p-2 mb-4"
           value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
+          onChange={(e) => setRole(e.target.value)}>
           <option value="">-- Select --</option>
           {availableSpots.map((spot) => (
             <option key={spot} value={spot}>
