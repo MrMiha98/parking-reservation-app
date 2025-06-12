@@ -489,7 +489,16 @@ export default function ParkingGrid({ user_role }: { user_role: string }) {
               key={spot}
               onClick={() => handleSpotClick(spot)}>
               <h1 className="text-2xl font-bold text-gray-100">{spot}</h1>
-              <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == parseInt(user_role) ? "text-white" : "text-primary"}`}>{availableToday ? "" : ownerNames[spot - 1]}</p>
+              <p className={`text-[12px] font-semibold absolute bottom-0 ${spot == parseInt(user_role) ? "text-white" : "text-primary"}`}>
+                {(() => {
+                  const spotReservation = reservations.find(r => r.spot_id === spot);
+                  if (spotReservation) {
+                    return spotReservation.user_name ?? "Unknown User";
+                  } else {
+                    return availableToday ? "" : ownerNames[spot - 1];
+                  }
+                })()}
+              </p>
               <div className={`absolute right-0 top-0 w-0 h-0 border-r-24 border-b-24 ${parseInt(user_role) == spot ? availableTommorow ? "border-green-800" : "border-red-800" : availableTommorow ? "border-green-600" : "border-red-600"} border-b-transparent`}></div>
             </div>
           )
