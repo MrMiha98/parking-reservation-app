@@ -63,3 +63,6 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
   # Database
 - In the Database part, there are 3 tables;
+- **parking_availability** - every row inside this table represents a free parking spot for a date. Consists of a parking spot id **(spot_id)** and date **(date)**
+- **parking_reservations** - every row in the table represents a reservation made by a spotless user. Every row consists of a **spot_id**, **date**, **user_id** and **username**
+- **profiles** - every row represents a user and their role (a number representing a parking spot or "none" if the user is a spotless user). Every row consists of **id** and **role**
