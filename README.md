@@ -25,7 +25,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ## 🧪 Run the App Locally
 - Run `npm run dev` to start the local server
 - Open `http://localhost:3000`
-
+- Sometimes the jsx component files are renamed and start with a capital letter which triggers an error when importing component
+- In that case just capitalise the first letter of the component file name like so: `footer.tsx` -> `Footer.tsx`
 
 ## 🧰 How It Works
 
