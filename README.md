@@ -16,5 +16,5 @@ A web app that lets parking spot owners free up their spots and lets non-owners 
 
 ## Setup Enviroment Variables
 - Create a `.env.local` file in your root directory and add:
-``` NEXT_PUBLIC_SUPABASE_URL=your-supabase-url```
-```NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key```
+-``` NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key```
