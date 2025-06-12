@@ -89,6 +89,8 @@ The backend is powered by **Supabase**, providing two core services: Authenticat
 
 ### Database Schema
 The database includes three tables:
+- **Turn off RLS security policy** for all tables when in development, before production its recommended to assing rules and safety policies.
+
 - **parking_availability**:
   - Tracks free parking spots for specific dates.
   - Columns:
