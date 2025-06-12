@@ -53,3 +53,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 - The unavailable days are unselectable
 - The user can select the dates they wish to reserve the spot and confirm using the button
 - The reservation is then inserted into the database
+
+## 🗄️ Backend
+- The backend is setup using Supabase
+- 2 services: Auth and Database
+
+  # Auth
+- Every new user is inserted into the Authentication table and give a unique id, email and password
+
+  # Database
+- In the Database part, there are 3 tables;
