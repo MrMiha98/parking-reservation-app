@@ -96,6 +96,11 @@ The database includes three tables:
     - `date`: Date the spot is available.
 - **parking_reservations**:
   - Stores reservations made by spotless users.
+  - Create a constrait that prevents the user from reserving multiple spots for a specific date (one spot per given date).
+  - ```sql
+    ALTER TABLE parking_reservations
+    ADD CONSTRAINT only_one_spot_per_date UNIQUE (user_id, date);
+    ```
   - Columns:
     - `spot_id`: Parking spot identifier.
     - `date`: Reservation date.
