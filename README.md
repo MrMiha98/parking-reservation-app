@@ -1,69 +1,118 @@
 # Parking Reservation App 🚗
 
-A web app that lets parking spot owners free up their spots and lets non-owners reserve them in real-time using a calendar view.
+A web application that enables parking spot owners to manage their spots and allows non-owners to reserve available spots in real-time using an intuitive calendar view.
 
 ## 📦 Features
--👤 User authentication with Supabase using email and password
-- 📅 Calendar-based spot availability
-- 🅿️ User can either pick a spot or chose to be a spotless user (not given a personal parking spot)
-- 🔐 Role-based access (owner vs spotless user)
-- ✅ Real-time data updates and notification toasts
+- **User Authentication**: Secure email and password login powered by Supabase.
+- **Calendar-Based Availability**: View and manage parking spot availability through a user-friendly calendar interface.
+- **User Roles**: Choose between being a spot owner (assigned a personal parking spot) or a spotless user (no personal spot).
+- **Role-Based Access Control**: Distinct functionalities for owners and spotless users.
+- **Real-Time Updates**: Instant data synchronization with notification toasts for user actions.
 
 ## 🚀 Getting Started
-- Download and extract the .zip file
-- Open the root of the project in a terminal of your choice
-- Run **npm install** to install all neccessary dependencies
 
-## Setup Enviroment Variables
-- Create a `.env.local` file in your root directory and add:
+### Prerequisites
+- Node.js (version 18 or higher)
+- npm (version 9 or higher)
+- A Supabase account with a project set up
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
+### Installation
+1. Download and extract the project `.zip` file.
+2. Open a terminal in the project’s root directory.
+3. Run the following command to install dependencies:
+   ```bash
+   npm install
+   ```
 
-## 🧪 Run the App Locally
-- Run `npm run dev` to start the local server
-- Open `http://localhost:3000`
-- Sometimes the jsx component files are renamed and start with a capital letter which triggers an error when importing components
-- In that case just capitalise the first letter of the component file name like so: `footer.tsx` -> `Footer.tsx`
+### Environment Variables
+1. Create a `.env.local` file in the project root.
+2. Add the following Supabase credentials (replace with your project-specific values):
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   ```
+3. Ensure the `.env.local` file is added to `.gitignore` to prevent committing sensitive data.
+
+### Running the App Locally
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open your browser and navigate to `http://localhost:3000`.
+3. **Note**: If you encounter import errors due to component file naming, ensure component file names start with a capital letter (e.g., rename `footer.tsx` to `Footer.tsx`).
 
 ## 🧰 How It Works
 
-# Starting as a new user
-- The parking layout consists of 2 floors
-- Every parking spot consists of a parking spot number and a name of the person that currently has the spot reserved
-- Green and red colors are used to visualise the status of the spot, red meaning "RESERVED" and green meaning "FREE"
-- The main background color of a spot indicates the availability status for today
-- The little triangle in the top right corner indicates the availability status for tommorow
+### Parking Layout
+- The parking garage consists of **2 floors**.
+- Each parking spot displays:
+  - **Spot Number**: Unique identifier for the spot.
+  - **Current Occupant**: Name of the user who has reserved the spot (if any).
+  - **Availability Status**:
+    - **Today**: Indicated by the spot’s background color (🟢 Green = Free, 🔴 Red = Reserved).
+    - **Tomorrow**: Indicated by a small triangle in the top-right corner (🟢 Green = Free, 🔴 Red = Reserved).
 
-# Starting as a new user
-- Every new user need to register and confirm an link that is send to the selected email address
-- After a successfull cofirmation the user is greeted with a modal
-- The modal allows the user to pick a number (number = parking spot number) if they own a parking spot
-- or the option "I Dont Own A Parking Spot" if they do not own a parking spot
-- After that the role and the selected spot is inserted into the database
+### New User Registration
+1. Register with an email and password.
+2. Confirm your account via a verification link sent to your email.
+3. Upon successful confirmation, a modal prompts you to:
+   - Select a parking spot number if you are an owner, or
+   - Choose "I Don’t Own a Parking Spot" to register as a spotless user.
+4. Your role and spot (if applicable) are saved to the database.
 
-# Owners workflow
-- Owners can select the free up button and free up their parking spot by selecting the wanted dates and confirming by clicking the button
-- In case the owner changes their mind, they can reverse the freed up reservation by selecting the trash big icon and selecting the dates they want to keep their spot locked
+### Owner Workflow
+- **Freeing a Spot**:
+  1. Click the "Free Up" button.
+  2. Select the desired dates for freeing your spot.
+  3. Confirm to update the spot’s availability.
+- **Reclaiming a Spot**:
+  1. Click the trash bin icon.
+  2. Select the dates you want to reclaim.
+  3. Confirm to lock the spot back to your ownership.
 
-# Spotless Users Workflow
-- Users can click on any spot they want and are shown a calendar that shows the dates the selected spot is free
-- Free days are marked as green and are selectable
-- The unavailable days are unselectable
-- The user can select the dates they wish to reserve the spot and confirm using the button
-- The reservation is then inserted into the database
+### Spotless User Workflow
+1. Click on any parking spot to view its availability calendar.
+2. **Calendar Details**:
+   - 🟢 Green dates are free and selectable.
+   - Unavailable dates are disabled.
+3. Select the desired reservation dates and confirm.
+4. The reservation is recorded in the database.
 
 ## 🗄️ Backend
-- The backend is setup using Supabase
-- 2 services: Auth and Database
+The backend is powered by **Supabase**, providing two core services: Authentication and Database.
 
-  # Auth
-- Every new user is inserted into the Authentication table and give a unique id, email and password
+### Authentication
+- Each new user is registered in the Supabase Authentication table with:
+  - Unique ID
+  - Email
+  - Password
 
-  # Database
-- In the Database part, there are 3 tables;
-- **parking_availability** - every row inside this table represents a free parking spot for a date. Consists of a parking spot id **(spot_id)** and date **(date)**
-- **parking_reservations** - every row in the table represents a reservation made by a spotless user. Every row consists of a **spot_id**, **date**, **user_id** and **username**
-- **profiles** - every row represents a user and their role (a number representing a parking spot or "none" if the user is a spotless user). Every row consists of **id** and **role**
+### Database Schema
+The database includes three tables:
+- **parking_availability**:
+  - Tracks free parking spots for specific dates.
+  - Columns:
+    - `spot_id`: Unique identifier for the parking spot.
+    - `date`: Date the spot is available.
+- **parking_reservations**:
+  - Stores reservations made by spotless users.
+  - Columns:
+    - `spot_id`: Parking spot identifier.
+    - `date`: Reservation date.
+    - `user_id`: ID of the reserving user.
+    - `username`: Name of the reserving user.
+- **profiles**:
+  - Stores user information and roles.
+  - Columns:
+    - `id`: Unique user ID.
+    - `role`: User role (spot number for owners or "none" for spotless users).
+
+## 🛠️ Troubleshooting
+- **Component Import Errors**: Ensure component file names start with a capital letter (e.g., `Footer.tsx` instead of `footer.tsx`).
+- **Supabase Connection Issues**: Verify that `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are correctly set in `.env.local`.
+- **Real-Time Updates Not Working**: Ensure your Supabase Realtime subscription is active and properly configured in the app.
+
+## 📚 Additional Resources
+- [Supabase Documentation](https://supabase.com/docs)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Node.js Installation Guide](https://nodejs.org/en/download)
