@@ -241,12 +241,17 @@ export default function ParkingGrid({ user_role }: { user_role: string }) {
     }
 
     // Step 2 → Insert new reservations into parking_reservations
-    const rowsToInsert = selectedDates.map(date => ({
-      user_id: user?.email,
-      user_name: user?.user_metadata?.name || "Unknown User",
-      spot_id: selectedSpotId,
-      date: formatDate(date),
-    }));
+    const rowsToInsert = selectedDates.map(date => {
+      const email = user?.email || "";
+      const usernameFromEmail = email.split("@")[0]; // This gives "example.one"
+
+      return {
+        user_id: email,
+        user_name: user?.user_metadata?.name || usernameFromEmail || "Unknown User",
+        spot_id: selectedSpotId,
+        date: formatDate(date),
+      };
+    });
 
     const { error: insertError } = await supabase
       .from("parking_reservations")
