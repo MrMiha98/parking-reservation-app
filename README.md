@@ -11,8 +11,8 @@ A web app that lets parking spot owners free up their spots and lets non-owners 
 
 ## 🚀 Getting Started
 - Download and extract the .zip file
-- open the root of the project in a terminal of your choice
-- run **npm install** to install all neccessary dependencies
+- Open the root of the project in a terminal of your choice
+- Run **npm install** to install all neccessary dependencies
 
 ## Setup Enviroment Variables
 - Create a `.env.local` file in your root directory and add:
@@ -23,5 +23,33 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
 ## 🧪 Run the App Locally
-- run **npm run dev** to start the local server
-- open `http://localhost:3000`
+- Run `npm run dev` to start the local server
+- Open `http://localhost:3000`
+
+
+## 🧰 How It Works
+
+# Starting as a new user
+- The parking layout consists of 2 floors
+- Every parking spot consists of a parking spot number and a name of the person that currently has the spot reserved
+- Green and red colors are used to visualise the status of the spot, red meaning "RESERVED" and green meaning "FREE"
+- The main background color of a spot indicates the availability status for today
+- The little triangle in the top right corner indicates the availability status for tommorow
+
+# Starting as a new user
+- Every new user need to register and confirm an link that is send to the selected email address
+- After a successfull cofirmation the user is greeted with a modal
+- The modal allows the user to pick a number (number = parking spot number) if they own a parking spot
+- or the option "I Dont Own A Parking Spot" if they do not own a parking spot
+- After that the role and the selected spot is inserted into the database
+
+# Owners workflow
+- Owners can select the free up button and free up their parking spot by selecting the wanted dates and confirming by clicking the button
+- In case the owner changes their mind, they can reverse the freed up reservation by selecting the trash big icon and selecting the dates they want to keep their spot locked
+
+# Spotless Users Workflow
+- Users can click on any spot they want and are shown a calendar that shows the dates the selected spot is free
+- Free days are marked as green and are selectable
+- The unavailable days are unselectable
+- The user can select the dates they wish to reserve the spot and confirm using the button
+- The reservation is then inserted into the database
